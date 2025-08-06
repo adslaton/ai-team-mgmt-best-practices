@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Are You Doing AI Right? Assessment</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #0f172a;
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subtitle {
+            font-size: 1.2em;
+            color: #64748b;
+        }
+        .score-display {
+            position: absolute;
+            right: 0;
+            top: 0;
+            background: rgba(59, 130, 246, 0.1);
+            border: 2px solid #3b82f6;
+            border-radius: 15px;
+            padding: 20px;
+            min-width: 150px;
+            text-align: center;
+        }
+        .score-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #3b82f6;
+        }
+        .score-label {
+            color: #94a3b8;
+            font-size: 0.9em;
+        }
+        .assessment-grid {
+            display: grid;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        .assessment-category {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .assessment-category:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+        }
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            background: rgba(59, 130, 246, 0.2);
+        }
+        .category-title {
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+        .category-score {
+            margin-left: auto;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #3b82f6;
+        }
+        .question {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .question-text {
+            margin-bottom: 15px;
+            color: #e2e8f0;
+            font-size: 1.05em;
+        }
+        .answer-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+        .answer-option {
+            padding: 10px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .answer-option:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+        }
+        .answer-option.selected {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
+        }
+        .answer-option.good {
+            border-color: #10b981;
+        }
+        .answer-option.selected.good {
+            background: #10b981;
+        }
+        .answer-option.okay {
+            border-color: #f59e0b;
+        }
+        .answer-option.selected.okay {
+            background: #f59e0b;
+        }
+        .answer-option.poor {
+            border-color: #ef4444;
+        }
+        .answer-option.selected.poor {
+            background: #ef4444;
+        }
+        .results-section {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .results-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .results-score {
+            font-size: 4em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .results-message {
+            font-size: 1.3em;
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+        .recommendations {
+            display: grid;
+            gap: 20px;
+        }
+        .recommendation {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #3b82f6;
+        }
+        .recommendation-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #3b82f6;
+        }
+        .recommendation-text {
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+        .maturity-meter {
+            margin: 30px 0;
+            background: rgba(255, 255, 255, 0.1);
+            height: 40px;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        .maturity-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ef4444, #f59e0b, #10b981, #3b82f6);
+            width: 0%;
+            transition: width 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 15px;
+        }
+        .maturity-label {
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .maturity-stages {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding: 0 10px;
+        }
+        .maturity-stage {
+            color: #64748b;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Are You Doing AI Right?</h1>
+            <p class="subtitle">Comprehensive AI implementation maturity assessment</p>
+            <div class="score-display">
+                <div class="score-number" id="totalScore">0</div>
+                <div class="score-label">AI Maturity Score</div>
+            </div>
+        </div>
+        
+        <div class="assessment-grid">
+            <!-- Strategy & Planning -->
+            <div class="assessment-category">
+                <div class="category-header">
+                    <div class="category-icon">🎯</div>
+                    <h2 class="category-title">Strategy & Planning</h2>
+                    <span class="category-score">0/20</span>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">How do you approach AI integration in your development process?</div>
+                    <div class="answer-options">
+                        <div class="answer-option poor" data-score="0" onclick="selectAnswer(this)">Ad-hoc usage</div>
+                        <div class="answer-option okay" data-score="2" onclick="selectAnswer(this)">Some guidelines</div>
+                        <div class="answer-option good" data-score="5" onclick="selectAnswer(this)">Documented strategy</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">How do you manage AI costs and ROI?</div>
+                    <div class="answer-options">
+                        <div class="answer-option poor" data-score="0" onclick="selectAnswer(this)">No tracking</div>
+                        <div class="answer-option okay" data-score="2" onclick="selectAnswer(this)">Basic monitoring</div>
+                        <div class="answer-option good" data-score="5" onclick="selectAnswer(this)">Full cost analysis</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">How mature is your task decomposition process?</div>
+                    <div class="answer-options">
+                        <div class="answer-option poor" data-score="0" onclick="selectAnswer(this)">Large, vague tasks</div>
+                        <div class="answer-option okay" data-score="2" onclick="selectAnswer(this)">Some breakdown</div>
+                        <div class="answer-option good" data-score="5" onclick="selectAnswer(this)">Atomic task levels</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">Do you have clear success metrics for AI implementation?</div>
+                    <div class="answer-options">
+                        <div class="answer-option poor" data-score="0" onclick="selectAnswer(this)">No metrics</div>
+                        <div class="answer-option okay" data-score="2" onclick="selectAnswer(this)">Basic metrics</div>
+                        <div class="answer-option good" data-score="5" onclick="selectAnswer(this)">Comprehensive KPIs</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Agent Management -->
+            <div class="assessment-category">
+                <div class="category-header">
+                    <div class="category-icon">🤖</div>
+                    <h2 class="category-title">Agent Management</h2>
+                    <span class="category-score">0/20</span>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">How do you select AI agents for specific tasks?</div>
+                    <div class="answer-options">
+                        <div class="answer-option poor" data-score="0" onclick="selectAnswer(this)">One agent for all</div>
+                        <div class="answer-option okay" data-score="2" onclick="selectAnswer(this)">Few specialists</div>
+                        <div class="answer-option good" data-score="5" onclick="selectAnswer(this)">Right agent per task</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">How sophisticated is your agent orchestration?</div>
+                    <div class="answer-options">
+                        <div class="answer-option poor" data-score="0" onclick="selectAnswer(this)">No orchestration</div>
+                        <div class="answer-option okay" data-score="2" onclick="selectAnswer(this)">Basic routing</div>
+                        <div class="answer-option good" data-score="5" onclick="selectAnswer(this)">Advanced orchestration</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">How do you handle context sharing between agents?</div>
+                    <div class="answer-options">
+                        <div class="answer-option poor" data-score="0" onclick="selectAnswer(this)">Manual copy-paste</div>
+                        <div class="answer-option okay" data-score="2" onclick="selectAnswer(this)">Some automation</div>
+                        <div class="answer-option good" data-score="5" onclick="selectAnswer(this)">Automated context flow</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">Do you maintain a knowledge base of effective prompts?</div>
+                    <div class="answer-options">
+                        <div class="answer-option poor" data-score="0" onclick="selectAnswer(this)">No documentation</div>
+                        <div class="answer-option okay" data-score="2" onclick="selectAnswer(this)">Some templates</div>
+                        <div class="answer-option good" data-score="5" onclick="selectAnswer(this)">Comprehensive library</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Development Process -->
+            <div class="assessment-category">
+                <div class="category-header">
+                    <div class="category-icon">⚙️</div>
+                    <h2 class="category-title">Development Process</h2>
+                    <span class="category-score">0/20</span>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">How detailed are your specifications before AI development?</div>
+                    <div class="answer-options">
+                        <div class="answer-option poor" data-score="0" onclick="selectAnswer(this)">Vague requirements</div>
+                        <div class="answer-option okay" data-score="2" onclick="selectAnswer(this)">Basic specs</div>
+                        <div class="answer-option good" data-score="5" onclick="selectAnswer(this)">Comprehensive specs</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">How do you review AI-generated code?</div>
+                    <div class="answer-options">
+                        <div class="answer-option poor" data-score="0" onclick="selectAnswer(this)">Direct deployment</div>
+                        <div class="answer-option okay" data-score="2" onclick="selectAnswer(this)">Quick review</div>
+                        <div class="answer-option good" data-score="5" onclick="selectAnswer(this)">Thorough validation</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">How integrated is AI in your CI/CD pipeline?</div>
+                    <div class="answer-options">
+                        <div class="answer-option poor" data-score="0" onclick="selectAnswer(this)">Not integrated</div>
+                        <div class="answer-option okay" data-score="2" onclick="selectAnswer(this)">Partial integration</div>
+                        <div class="answer-option good" data-score="5" onclick="selectAnswer(this)">Fully automated</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">Do you have automated testing for AI outputs?</div>
+                    <div class="answer-options">
+                        <div class="answer-option poor" data-score="0" onclick="selectAnswer(this)">No testing</div>
+                        <div class="answer-option okay" data-score="2" onclick="selectAnswer(this)">Manual testing</div>
+                        <div class="answer-option good" data-score="5" onclick="selectAnswer(this)">Automated suite</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quality & Security -->
+            <div class="assessment-category">
+                <div class="category-header">
+                    <div class="category-icon">🛡️</div>
+                    <h2 class="category-title">Quality & Security</h2>
+                    <span class="category-score">0/20</span>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">How do you ensure AI output quality?</div>
+                    <div class="answer-options">
+                        <div class="answer-option poor" data-score="0" onclick="selectAnswer(this)">Trust blindly</div>
+                        <div class="answer-option okay" data-score="2" onclick="selectAnswer(this)">Spot checks</div>
+                        <div class="answer-option good" data-score="5" onclick="selectAnswer(this)">Quality gates</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">How do you handle data privacy with AI?</div>
+                    <div class="answer-options">
+                        <div class="answer-option poor" data-score="0" onclick="selectAnswer(this)">No policies</div>
+                        <div class="answer-option okay" data-score="2" onclick="selectAnswer(this)">Basic guidelines</div>
+                        <div class="answer-option good" data-score="5" onclick="selectAnswer(this)">Strict protocols</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">Do you scan AI code for security vulnerabilities?</div>
+                    <div class="answer-options">
+                        <div class="answer-option poor" data-score="0" onclick="selectAnswer(this)">No scanning</div>
+                        <div class="answer-option okay" data-score="2" onclick="selectAnswer(this)">Manual review</div>
+                        <div class="answer-option good" data-score="5" onclick="selectAnswer(this)">Automated scanning</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">How do you handle AI errors and failures?</div>
+                    <div class="answer-options">
+                        <div class="answer-option poor" data-score="0" onclick="selectAnswer(this)">React when occurs</div>
+                        <div class="answer-option okay" data-score="2" onclick="selectAnswer(this)">Basic fallbacks</div>
+                        <div class="answer-option good" data-score="5" onclick="selectAnswer(this)">Comprehensive strategy</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Team & Culture -->
+            <div class="assessment-category">
+                <div class="category-header">
+                    <div class="category-icon">👥</div>
+                    <h2 class="category-title">Team & Culture</h2>
+                    <span class="category-score">0/20</span>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">How well-trained is your team on AI collaboration?</div>
+                    <div class="answer-options">
+                        <div class="answer-option poor" data-score="0" onclick="selectAnswer(this)">No training</div>
+                        <div class="answer-option okay" data-score="2" onclick="selectAnswer(this)">Basic knowledge</div>
+                        <div class="answer-option good" data-score="5" onclick="selectAnswer(this)">Expert level</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">How do you share AI learnings across the team?</div>
+                    <div class="answer-options">
+                        <div class="answer-option poor" data-score="0" onclick="selectAnswer(this)">No sharing</div>
+                        <div class="answer-option okay" data-score="2" onclick="selectAnswer(this)">Informal sharing</div>
+                        <div class="answer-option good" data-score="5" onclick="selectAnswer(this)">Structured knowledge base</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">How does your team view AI agents?</div>
+                    <div class="answer-options">
+                        <div class="answer-option poor" data-score="0" onclick="selectAnswer(this)">Threat to jobs</div>
+                        <div class="answer-option okay" data-score="2" onclick="selectAnswer(this)">Useful tools</div>
+                        <div class="answer-option good" data-score="5" onclick="selectAnswer(this)">Team members</div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <div class="question-text">How often do you iterate on AI processes?</div>
+                    <div class="answer-options">
+                        <div class="answer-option poor" data-score="0" onclick="selectAnswer(this)">Never</div>
+                        <div class="answer-option okay" data-score="2" onclick="selectAnswer(this)">Occasionally</div>
+                        <div class="answer-option good" data-score="5" onclick="selectAnswer(this)">Continuous improvement</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="results-section" id="results" style="display: none;">
+            <div class="results-header">
+                <h2 style="font-size: 2.5em; margin-bottom: 20px;">Your AI Maturity Assessment</h2>
+                <div class="results-score" id="finalScore">0</div>
+                <div class="results-message" id="scoreMessage">Complete the assessment to see your results</div>
+            </div>
+            
+            <div class="maturity-meter">
+                <div class="maturity-fill" id="maturityFill">
+                    <span class="maturity-label" id="maturityLabel">Beginner</span>
+                </div>
+            </div>
+            <div class="maturity-stages">
+                <span class="maturity-stage">Beginner</span>
+                <span class="maturity-stage">Developing</span>
+                <span class="maturity-stage">Competent</span>
+                <span class="maturity-stage">Advanced</span>
+                <span class="maturity-stage">Expert</span>
+            </div>
+            
+            <div class="recommendations" id="recommendations">
+                <!-- Recommendations will be populated dynamically -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let totalScore = 0;
+        const maxScore = 100;
+        
+        function selectAnswer(element) {
+            // Remove previous selection in the same question
+            const question = element.closest('.question');
+            question.querySelectorAll('.answer-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selection to clicked element
+            element.classList.add('selected');
+            
+            // Update scores
+            updateScores();
+        }
+        
+        function updateScores() {
+            totalScore = 0;
+            
+            // Calculate total score
+            document.querySelectorAll('.answer-option.selected').forEach(option => {
+                totalScore += parseInt(option.dataset.score);
+            });
+            
+            // Update display
+            document.getElementById('totalScore').textContent = totalScore;
+            
+            // Update category scores
+            document.querySelectorAll('.assessment-category').forEach(category => {
+                let categoryScore = 0;
+                category.querySelectorAll('.answer-option.selected').forEach(option => {
+                    categoryScore += parseInt(option.dataset.score);
+                });
+                category.querySelector('.category-score').textContent = `${categoryScore}/20`;
+            });
+            
+            // Check if assessment is complete
+            const totalQuestions = document.querySelectorAll('.question').length;
+            const answeredQuestions = document.querySelectorAll('.answer-option.selected').length;
+            
+            if (answeredQuestions === totalQuestions) {
+                showResults();
+            }
+        }
+        
+        function showResults() {
+            const resultsSection = document.getElementById('results');
+            resultsSection.style.display = 'block';
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Update final score
+            document.getElementById('finalScore').textContent = totalScore;
+            
+            // Determine maturity level
+            let maturityLevel, maturityPercent, scoreMessage;
+            
+            if (totalScore >= 80) {
+                maturityLevel = 'Expert';
+                maturityPercent = 90 + (totalScore - 80) / 2;
+                scoreMessage = 'Outstanding! You\'re at the cutting edge of AI-augmented development.';
+            } else if (totalScore >= 60) {
+                maturityLevel = 'Advanced';
+                maturityPercent = 70 + (totalScore - 60);
+                scoreMessage = 'Excellent! You have strong AI integration practices.';
+            } else if (totalScore >= 40) {
+                maturityLevel = 'Competent';
+                maturityPercent = 40 + (totalScore - 40) * 1.5;
+                scoreMessage = 'Good progress! You\'re building solid AI capabilities.';
+            } else if (totalScore >= 20) {
+                maturityLevel = 'Developing';
+                maturityPercent = 20 + (totalScore - 20);
+                scoreMessage = 'You\'re on the right track with room for growth.';
+            } else {
+                maturityLevel = 'Beginner';
+                maturityPercent = totalScore;
+                scoreMessage = 'Just starting out - exciting opportunities ahead!';
+            }
+            
+            // Update UI
+            document.getElementById('scoreMessage').textContent = scoreMessage;
+            document.getElementById('maturityLabel').textContent = maturityLevel;
+            document.getElementById('maturityFill').style.width = maturityPercent + '%';
+            
+            // Generate recommendations
+            generateRecommendations();
+        }
+        
+        function generateRecommendations() {
+            const recommendations = [];
+            
+            // Check each category for low scores
+            document.querySelectorAll('.assessment-category').forEach(category => {
+                const categoryTitle = category.querySelector('.category-title').textContent;
+                let categoryScore = 0;
+                const weakAreas = [];
+                
+                category.querySelectorAll('.question').forEach(question => {
+                    const selected = question.querySelector('.answer-option.selected');
+                    if (selected) {
+                        const score = parseInt(selected.dataset.score);
+                        categoryScore += score;
+                        if (score < 5) {
+                            weakAreas.push(question.querySelector('.question-text').textContent);
+                        }
+                    }
+                });
+                
+                if (categoryScore < 15) {
+                    recommendations.push({
+                        category: categoryTitle,
+                        areas: weakAreas
+                    });
+                }
+            });
+            
+            // Display recommendations
+            const recommendationsDiv = document.getElementById('recommendations');
+            recommendationsDiv.innerHTML = '<h3 style="font-size: 1.8em; margin-bottom: 20px; color: #3b82f6;">Priority Recommendations</h3>';
+            
+            if (recommendations.length === 0) {
+                recommendationsDiv.innerHTML += `
+                    <div class="recommendation">
+                        <div class="recommendation-title">🌟 Continue Excellence</div>
+                        <div class="recommendation-text">
+                            You're doing exceptionally well! Focus on maintaining your high standards and exploring cutting-edge AI capabilities like advanced agent orchestration and predictive analytics.
+                        </div>
+                    </div>
+                `;
+            } else {
+                recommendations.forEach(rec => {
+                    let recHtml = `
+                        <div class="recommendation">
+                            <div class="recommendation-title">📈 Improve ${rec.category}</div>
+                            <div class="recommendation-text">
+                                Focus on enhancing:
+                                <ul style="margin-top: 10px; padding-left: 20px;">
+                    `;
+                    rec.areas.forEach(area => {
+                        recHtml += `<li style="margin-bottom: 5px;">${area}</li>`;
+                    });
+                    recHtml += `
+                                </ul>
+                            </div>
+                        </div>
+                    `;
+                    recommendationsDiv.innerHTML += recHtml;
+                });
+            }
+            
+            // Add general recommendations based on score
+            if (totalScore < 40) {
+                recommendationsDiv.innerHTML += `
+                    <div class="recommendation">
+                        <div class="recommendation-title">🚀 Quick Wins</div>
+                        <div class="recommendation-text">
+                            Start with spec-driven development and basic agent specialization. These foundational practices will yield immediate improvements in AI effectiveness.
+                        </div>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

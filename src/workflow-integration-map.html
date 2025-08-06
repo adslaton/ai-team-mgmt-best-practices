@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Workflow Integration Map</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #0c0a09;
+            color: #f1f5f9;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #fb923c, #f97316, #ea580c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subtitle {
+            font-size: 1.2em;
+            color: #a1a1aa;
+        }
+        .workflow-map {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+            overflow-x: auto;
+        }
+        .stage {
+            flex: 1;
+            min-width: 280px;
+            background: #1c1917;
+            border-radius: 15px;
+            padding: 20px;
+            border-top: 4px solid;
+            text-align: center;
+        }
+        .stage-plan { border-color: #38bdf8; }
+        .stage-develop { border-color: #a78bfa; }
+        .stage-test { border-color: #34d399; }
+        .stage-review { border-color: #fbbf24; }
+        .stage-deploy { border-color: #f87171; }
+
+        .stage-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .stage-icon {
+            font-size: 1.5em;
+        }
+        .stage-title {
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+        .stage-plan .stage-title { color: #38bdf8; }
+        .stage-develop .stage-title { color: #a78bfa; }
+        .stage-test .stage-title { color: #34d399; }
+        .stage-review .stage-title { color: #fbbf24; }
+        .stage-deploy .stage-title { color: #f87171; }
+
+        .integration-point {
+            background: #292524;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 3px solid #f97316;
+            text-align: left;
+        }
+        .point-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fb923c;
+        }
+        .point-description {
+            font-size: 0.95em;
+            color: #d4d4d8;
+            line-height: 1.5;
+        }
+        .point-agent {
+            font-size: 0.85em;
+            color: #a1a1aa;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        .arrow {
+            font-size: 2em;
+            color: #71717a;
+            align-self: center;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🗺️ AI Workflow Integration Map</h1>
+            <p class="subtitle">Embedding AI agents across the entire software development lifecycle</p>
+        </div>
+
+        <div class="workflow-map">
+            <!-- Plan Stage -->
+            <div class="stage stage-plan">
+                <div class="stage-header">
+                    <span class="stage-icon">📝</span>
+                    <h2 class="stage-title">Plan</h2>
+                </div>
+                <div class="integration-point">
+                    <h3 class="point-title">Requirement Analysis</h3>
+                    <p class="point-description">Analyze business requirements to identify ambiguities and suggest clarifications.</p>
+                    <p class="point-agent">Agent: Architect Agent</p>
+                </div>
+                <div class="integration-point">
+                    <h3 class="point-title">Spec Generation</h3>
+                    <p class="point-description">Generate detailed technical specifications from high-level feature descriptions.</p>
+                    <p class="point-agent">Agent: Architect Agent</p>
+                </div>
+                <div class="integration-point">
+                    <h3 class="point-title">Task Decomposition</h3>
+                    <p class="point-description">Break down large tasks into smaller, manageable sub-tasks for development.</p>
+                    <p class="point-agent">Agent: Orchestrator Agent</p>
+                </div>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <!-- Develop Stage -->
+            <div class="stage stage-develop">
+                <div class="stage-header">
+                    <span class="stage-icon">💻</span>
+                    <h2 class="stage-title">Develop</h2>
+                </div>
+                <div class="integration-point">
+                    <h3 class="point-title">Code Generation</h3>
+                    <p class="point-description">Write boilerplate code, functions, or entire components based on specs.</p>
+                    <p class="point-agent">Agent: Coder Agent</p>
+                </div>
+                <div class="integration-point">
+                    <h3 class="point-title">Refactoring</h3>
+                    <p class="point-description">Improve existing code for readability, performance, or to meet new standards.</p>
+                    <p class="point-agent">Agent: Coder Agent</p>
+                </div>
+                <div class="integration-point">
+                    <h3 class="point-title">Debugging Assistance</h3>
+                    <p class="point-description">Analyze error messages and code context to suggest potential fixes for bugs.</p>
+                    <p class="point-agent">Agent: Coder Agent</p>
+                </div>
+                 <div class="integration-point">
+                    <h3 class="point-title">Documentation</h3>
+                    <p class="point-description">Generate code comments, docstrings, and update README files as code is written.</p>
+                    <p class="point-agent">Agent: Documentation Agent</p>
+                </div>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <!-- Test Stage -->
+            <div class="stage stage-test">
+                <div class="stage-header">
+                    <span class="stage-icon">🧪</span>
+                    <h2 class="stage-title">Test</h2>
+                </div>
+                <div class="integration-point">
+                    <h3 class="point-title">Unit Test Generation</h3>
+                    <p class="point-description">Create unit tests for new or modified code to ensure correctness and coverage.</p>
+                    <p class="point-agent">Agent: Testing Agent</p>
+                </div>
+                <div class="integration-point">
+                    <h3 class="point-title">Edge Case Identification</h3>
+                    <p class="point-description">Analyze code to identify potential edge cases and generate tests for them.</p>
+                    <p class="point-agent">Agent: Testing Agent</p>
+                </div>
+                <div class="integration-point">
+                    <h3 class="point-title">Integration Test Scaffolding</h3>
+                    <p class="point-description">Create boilerplate for integration tests based on component interactions.</p>
+                    <p class="point-agent">Agent: Testing Agent</p>
+                </div>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <!-- Review Stage -->
+            <div class="stage stage-review">
+                <div class="stage-header">
+                    <span class="stage-icon">👀</span>
+                    <h2 class="stage-title">Review</h2>
+                </div>
+                <div class="integration-point">
+                    <h3 class="point-title">Automated Code Review</h3>
+                    <p class="point-description">On pull requests, automatically review code for style, best practices, and potential bugs.</p>
+                    <p class="point-agent">Agent: Architect Agent</p>
+                </div>
+                <div class="integration-point">
+                    <h3 class="point-title">Security Scanning</h3>
+                    <p class="point-description">Scan for common security vulnerabilities (e.g., OWASP Top 10) in changed files.</p>
+                    <p class="point-agent">Agent: Security Agent</p>
+                </div>
+                <div class="integration-point">
+                    <h3 class="point-title">PR Description Generation</h3>
+                    <p class="point-description">Summarize code changes and generate a detailed pull request description.</p>
+                    <p class="point-agent">Agent: Documentation Agent</p>
+                </div>
+            </div>
+
+            <div class="arrow">→</div>
+
+            <!-- Deploy Stage -->
+            <div class="stage stage-deploy">
+                <div class="stage-header">
+                    <span class="stage-icon">🚀</span>
+                    <h2 class="stage-title">Deploy</h2>
+                </div>
+                <div class="integration-point">
+                    <h3 class="point-title">Release Note Generation</h3>
+                    <p class="point-description">Generate release notes by summarizing all pull requests included in a release.</p>
+                    <p class="point-agent">Agent: Documentation Agent</p>
+                </div>
+                <div class="integration-point">
+                    <h3 class="point-title">Deployment Validation</h3>
+                    <p class="point-description">Run post-deployment smoke tests to ensure the application is healthy.</p>
+                    <p class="point-agent">Agent: Testing Agent</p>
+                </div>
+                <div class="integration-point">
+                    <h3 class="point-title">Error Log Analysis</h3>
+                    <p class="point-description">Monitor logs post-deployment for new or unusual errors and report them.</p>
+                    <p class="point-agent">Agent: Orchestrator Agent</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

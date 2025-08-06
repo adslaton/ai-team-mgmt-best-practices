@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Team Configuration Guide</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #1e1b4b;
+            color: #e0e7ff;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #c084fc, #f87171);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .subtitle {
+            font-size: 1.2em;
+            color: #a5b4fc;
+        }
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .agent-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .agent-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(192, 132, 252, 0.2);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        .agent-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .agent-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            background: linear-gradient(135deg, #c084fc, #f87171);
+            color: #1e1b4b;
+        }
+        .agent-title {
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+        .agent-description {
+            color: #c7d2fe;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        .agent-details {
+            font-size: 0.9em;
+        }
+        .detail-item {
+            margin-bottom: 10px;
+        }
+        .detail-label {
+            font-weight: 600;
+            color: #a5b4fc;
+        }
+        .detail-value {
+            color: #e0e7ff;
+        }
+        .integration-patterns {
+            margin-top: 50px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 40px;
+        }
+        .patterns-title {
+            font-size: 2em;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #c084fc;
+        }
+        .patterns-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        .pattern-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid #f87171;
+        }
+        .pattern-name {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .pattern-description {
+            color: #c7d2fe;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>��� AI Team Configuration Guide</h1>
+            <p class="subtitle">Define agent roles, capabilities, and integration patterns for your AI team</p>
+        </div>
+
+        <div class="config-grid">
+            <div class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-icon">🎯</div>
+                    <h2 class="agent-title">Orchestrator Agent</h2>
+                </div>
+                <p class="agent-description">The "Project Manager" of the AI team. It analyzes requests, decomposes tasks, and routes them to the appropriate specialist agents.</p>
+                <div class="agent-details">
+                    <div class="detail-item"><span class="detail-label">Core Capability:</span> Task routing and workflow management.</div>
+                    <div class="detail-item"><span class="detail-label">Recommended Model:</span> High-reasoning model (e.g., GPT-4, Claude 3 Opus).</div>
+                    <div class="detail-item"><span class="detail-label">Key Prompting:</span> System-level instructions, task breakdown logic.</div>
+                </div>
+            </div>
+
+            <div class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-icon">🏛️</div>
+                    <h2 class="agent-title">Architect Agent</h2>
+                </div>
+                <p class="agent-description">Designs high-level system architecture, database schemas, and ensures code follows established patterns and best practices.</p>
+                <div class="agent-details">
+                    <div class="detail-item"><span class="detail-label">Core Capability:</span> System design and pattern analysis.</div>
+                    <div class="detail-item"><span class="detail-label">Recommended Model:</span> High-reasoning model with large context window.</div>
+                    <div class="detail-item"><span class="detail-label">Key Prompting:</span> Architectural constraints, non-functional requirements.</div>
+                </div>
+            </div>
+
+            <div class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-icon">💻</div>
+                    <h2 class="agent-title">Coder Agent</h2>
+                </div>
+                <p class="agent-description">Writes, refactors, and debugs code based on detailed specifications from the Architect and Orchestrator agents.</p>
+                <div class="agent-details">
+                    <div class="detail-item"><span class="detail-label">Core Capability:</span> Code generation and implementation.</div>
+                    <div class="detail-item"><span class="detail-label">Recommended Model:</span> Code-specialized model (e.g., CodeLlama, GPT-4-Turbo).</div>
+                    <div class="detail-item"><span class="detail-label">Key Prompting:</span> Detailed specs, file context, examples.</div>
+                </div>
+            </div>
+
+            <div class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-icon">🧪</div>
+                    <h2 class="agent-title">Testing Agent</h2>
+                </div>
+                <p class="agent-description">Generates unit tests, integration tests, and end-to-end tests. It identifies edge cases and ensures code quality.</p>
+                <div class="agent-details">
+                    <div class="detail-item"><span class="detail-label">Core Capability:</span> Test case generation and validation.</div>
+                    <div class="detail-item"><span class="detail-label">Recommended Model:</span> Code-specialized model, can be faster/cheaper.</div>
+                    <div class="detail-item"><span class="detail-label">Key Prompting:</span> Code to be tested, testing framework, coverage goals.</div>
+                </div>
+            </div>
+
+            <div class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-icon">🛡️</div>
+                    <h2 class="agent-title">Security Agent</h2>
+                </div>
+                <p class="agent-description">Scans code for vulnerabilities, checks dependencies for security issues, and ensures adherence to security best practices.</p>
+                <div class="agent-details">
+                    <div class="detail-item"><span class="detail-label">Core Capability:</span> Security analysis and vulnerability detection.</div>
+                    <div class="detail-item"><span class="detail-label">Recommended Model:</span> Model with up-to-date security knowledge.</div>
+                    <div class="detail-item"><span class="detail-label">Key Prompting:</span> OWASP Top 10, specific security requirements.</div>
+                </div>
+            </div>
+
+            <div class="agent-card">
+                <div class="agent-header">
+                    <div class="agent-icon">📚</div>
+                    <h2 class="agent-title">Documentation Agent</h2>
+                </div>
+                <p class="agent-description">Writes and updates documentation, including READMEs, API documentation (e.g., OpenAPI spec), and code comments.</p>
+                <div class="agent-details">
+                    <div class="detail-item"><span class="detail-label">Core Capability:</span> Technical writing and documentation generation.</div>
+                    <div class="detail-item"><span class="detail-label">Recommended Model:</span> Strong language model, doesn't need to be code-specific.</div>
+                    <div class="detail-item"><span class="detail-label">Key Prompting:</span> Code context, documentation format, target audience.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="integration-patterns">
+            <h2 class="patterns-title">Team Integration Patterns</h2>
+            <div class="patterns-grid">
+                <div class="pattern-card">
+                    <h3 class="pattern-name">Human-in-the-Loop</h3>
+                    <p class="pattern-description">An AI agent proposes a solution (e.g., code, architecture), and a human developer reviews, approves, or modifies it before it proceeds to the next step.</p>
+                </div>
+                <div class="pattern-card">
+                    <h3 class="pattern-name">AI-to-AI Collaboration</h3>
+                    <p class="pattern-description">The Orchestrator agent passes tasks between specialist agents automatically. For example, the Architect Agent's output becomes the Coder Agent's input.</p>
+                </div>
+                <div class="pattern-card">
+                    <h3 class="pattern-name">AI-Powered CI/CD</h3>
+                    <p class="pattern-description">Integrate agents directly into your CI/CD pipeline. For example, a Testing Agent runs on every commit, and a Security Agent scans before deployment.</p>
+                </div>
+                <div class="pattern-card">
+                    <h3 class="pattern-name">AI Pair Programming</h3>
+                    <p class="pattern-description">A developer works alongside an AI agent in real-time, using it as an interactive coding assistant, debugger, and knowledge source.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
